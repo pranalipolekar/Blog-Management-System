@@ -1,45 +1,43 @@
-Create table user (
- userID int Primary Key auto_increment,
+create table users (
+ userID BIGINT primary key auto_increment,
  username varchar(100) NOT NULL UNIQUE,
  email VARCHAR(150) NOT NULL UNIQUE,
-password VARCHAR(255) NOT NULL,
- role varchar(100) NOT NULL UNIQUE,
-createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+ password VARCHAR(255) NOT NULL,
+ role varchar(50) NOT NULL,
+ createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 create table blog(
-blogID int primary key auto_increment,
-userID int,
-title varchar(255),
-content text,
-Category VARCHAR(100),
-image LONGBLOB NOT NULL ,
-status varchar(100) ,
-PublicationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-FOREIGN KEY (userID) REFERENCES User(userID)
+ blogID BIGINT primary key auto_increment,
+ userID BIGINT,
+ title varchar(255) NOT NULL,
+ content text NOT NULL,
+ category varchar(100),
+ image LONGBLOB,
+ status varchar(50),
+ publicationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+ foreign key (userID) references users(userID)
 );
 
-create table comment(
-commentID int primary key auto_increment,
-userID int,
-blogID int,
-content text,
-commentedDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-Foreign key (userID) references user (userID),
-foreign key (blogID) references blog (blogID)
+create table comments(
+ commentID BIGINT primary key auto_increment,
+ userID BIGINT NOT NULL,
+ blogID BIGINT NOT NULL,
+ content text NOT NULL,
+ createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ foreign key (userID) references users(userID),
+ foreign key (blogID) references blog(blogID)
 );
-
-create table interaction(
-interactionID int primary key auto_increment,
-userID int,
-blogID int,
-commentID int,
-type varchar(50),
-ReactionTimeStamp TimeStamp,
-Foreign key (userID) references user (userID),
-foreign key (blogID) references blog (blogID),
-Foreign key (commentID) references comment(commentID)
+create table interactions(
+ interactionID BIGINT primary key auto_increment,
+ userID BIGINT NOT NULL,
+ blogID BIGINT,
+ commentID BIGINT,
+ type varchar(20) NOT NULL,
+ reactionTimestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ foreign key (userID) references users(userID),
+ foreign key (blogID) references blog(blogID),
+ foreign key (commentID) references comments(commentID)
 );
-
