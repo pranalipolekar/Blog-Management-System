@@ -1,6 +1,7 @@
 package org.bloggerManagementSystem.blogger.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -12,26 +13,28 @@ public class Comment {
     @Column(name = "commentID")
     private Long commentID;
 
-    @ManyToOne
-    @JoinColumn(name = "blogID", referencedColumnName = "blogID")
+    @ManyToOne (fetch = FetchType.LAZY)
+    @JoinColumn(name = "blogID", referencedColumnName = "blogID", nullable = false)
     private Blog blog;
 
-    @ManyToOne
-    @JoinColumn(name = "userID", referencedColumnName = "userID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userID", referencedColumnName = "userID", nullable = false)
     private User user;
 
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
-    @Column(name = "createdAt")
+
+    @CreationTimestamp
+    @Column(name = "createdAt",updatable = false)
     private LocalDateTime createdAt;
 
     public Comment() {
     }
 
-    public Comment(Long commentID, Blog blogID, User userID, String content, LocalDateTime createdAt) {
+    public Comment(Long commentID, Blog blog, User user, String content, LocalDateTime createdAt) {
         this.commentID = commentID;
-        this.blog = blogID;
-        this.user = userID;
+        this.blog = blog;
+        this.user = user;
         this.content = content;
         this.createdAt = createdAt;
     }

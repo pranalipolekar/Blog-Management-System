@@ -2,7 +2,9 @@ package org.bloggerManagementSystem.blogger.entity;
 
 import jakarta.persistence.*;
 import org.bloggerManagementSystem.blogger.entity.enums.BlogStatus;
-import org.bloggerManagementSystem.blogger.entity.enums.blogCategory;
+import org.bloggerManagementSystem.blogger.entity.enums.BlogCategory;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -14,39 +16,40 @@ public class Blog {
     @Column(name = "blogID")
     private Long blogID;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID", referencedColumnName = "userID")
     private User user;
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title", nullable = false,length = 200)
     private String title;
 
     @Column(name = "content" , columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(name = "category", length = 100)
+    @Column(name = "category", nullable = false , length = 100)
     @Enumerated(EnumType.STRING)
-    private blogCategory category;
+    private BlogCategory category;
 
     @Lob
     @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
 
-    @Column(name = "status", length = 50)
+    @Column(name = "status",nullable = false, length = 50)
     @Enumerated(EnumType.STRING)
     private BlogStatus status; // DRAFT, PUBLISHED, ARCHIVED
 
-
-    @Column(name = "publicationDate")
+    @CreationTimestamp
+    @Column(name = "publicationDate",updatable = false)
     private LocalDateTime publicationDate;
 
+    @UpdateTimestamp
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 
     public Blog() {
     }
 
-    public Blog(Long blogID, User user, String title, String content, blogCategory category, byte[] image, BlogStatus status, LocalDateTime publicationDate, LocalDateTime updatedAt) {
+    public Blog(Long blogID, User user, String title, String content, BlogCategory category, byte[] image, BlogStatus status, LocalDateTime publicationDate, LocalDateTime updatedAt) {
         this.blogID = blogID;
         this.user = user;
         this.title = title;
@@ -90,11 +93,11 @@ public class Blog {
         this.content = content;
     }
 
-    public blogCategory getCategory() {
+    public BlogCategory getCategory() {
         return category;
     }
 
-    public void setCategory(blogCategory category) {
+    public void setCategory(BlogCategory category) {
         this.category = category;
     }
 

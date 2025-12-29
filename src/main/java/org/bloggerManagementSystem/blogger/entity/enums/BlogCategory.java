@@ -1,6 +1,6 @@
 package org.bloggerManagementSystem.blogger.entity.enums;
 
-public enum blogCategory {
+public enum BlogCategory {
     TECHNOLOGY,
     LIFESTYLE,
     TRAVEL,

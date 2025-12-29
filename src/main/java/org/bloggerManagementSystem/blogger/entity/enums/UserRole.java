@@ -1,6 +1,6 @@
 package org.bloggerManagementSystem.blogger.entity.enums;
 
-public enum userRole {
+public enum UserRole {
     ADMIN,
     AUTHOR,
     READER

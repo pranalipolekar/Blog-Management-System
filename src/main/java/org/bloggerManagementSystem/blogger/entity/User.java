@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.bloggerManagementSystem.blogger.entity.enums.userRole;
+import org.bloggerManagementSystem.blogger.entity.enums.UserRole;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -24,30 +26,33 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
 
-    @Column(name = "username")
+    @Column(name = "username" , nullable = false, unique = true,length = 100)
     private String userName;
 
+    @Column(name = "email", nullable = false, unique = true, length = 150)
     @Setter(AccessLevel.PRIVATE)
     private String email;
 
-    @Setter(AccessLevel.NONE)
-    @Column(name = "password")
+     @Setter(AccessLevel.NONE)
+    @Column(name = "password", nullable = false, length = 255)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private userRole role;
+    @Column(name = "role",nullable = false, length = 50)
+    private UserRole role;
 
-    @Column(name = "createdAt")
+    @CreationTimestamp
+    @Column(name = "createdAt",updatable = false)
     private Timestamp createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updatedAt")
     private Timestamp updatedAt;
 
     public User(){
 
     }
-public User(Long userID, String userName, String email, String password, userRole role, Timestamp createdAt, Timestamp updatedAt) {
+public User(Long userID, String userName, String email, String password, UserRole role, Timestamp createdAt, Timestamp updatedAt) {
         this.userID = userID;
         this.userName = userName;
         this.email = email;
