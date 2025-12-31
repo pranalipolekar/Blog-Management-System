@@ -8,18 +8,21 @@ create table users (
  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-create table blog(
- blogID BIGINT primary key auto_increment,
- userID BIGINT,
- title varchar(255) NOT NULL,
- content text NOT NULL,
- category varchar(100),
- image LONGBLOB,
- status varchar(50),
- publicationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
- updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
- foreign key (userID) references users(userID)
-);
+CREATE TABLE `blog` (
+  `blogID` bigint NOT NULL AUTO_INCREMENT,
+  `userID` bigint DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `image` varchar(5000) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `publicationDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`blogID`),
+  KEY `userID` (`userID`),
+  CONSTRAINT `blog_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 create table comments(
  commentID BIGINT primary key auto_increment,
