@@ -19,7 +19,7 @@ public class Interaction {
     private Blog blog;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID",nullable = false, referencedColumnName = "userID")
+    @JoinColumn(name = "userID",referencedColumnName = "userID")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,7 +27,7 @@ public class Interaction {
     private Comment comment; // Nullable, for interactions on comments
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
+    @Column(name = "type")
     private InteractionType type; // e.g., "LIKE", "SHARE"
 
     @CreationTimestamp

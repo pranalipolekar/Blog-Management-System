@@ -20,21 +20,20 @@ public class Blog {
     @JoinColumn(name = "userID", referencedColumnName = "userID")
     private User user;
 
-    @Column(name = "title", nullable = false,length = 200)
+    @Column(name = "title")
     private String title;
 
-    @Column(name = "content" , columnDefinition = "TEXT", nullable = false)
+    @Column(name = "content")
     private String content;
 
-    @Column(name = "category", nullable = false , length = 100)
+    @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private BlogCategory category;
 
-    @Lob
-    @Column(name = "image", columnDefinition = "LONGBLOB")
-    private byte[] image;
+    @Column(name = "image", length = 5000)
+    private String image;
 
-    @Column(name = "status",nullable = false, length = 50)
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private BlogStatus status; // DRAFT, PUBLISHED, ARCHIVED
 
@@ -49,7 +48,7 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(Long blogID, User user, String title, String content, BlogCategory category, byte[] image, BlogStatus status, LocalDateTime publicationDate, LocalDateTime updatedAt) {
+    public Blog(Long blogID, User user, String title, String content, BlogCategory category, String image, BlogStatus status, LocalDateTime publicationDate, LocalDateTime updatedAt) {
         this.blogID = blogID;
         this.user = user;
         this.title = title;
@@ -101,11 +100,11 @@ public class Blog {
         this.category = category;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

@@ -22,3 +22,11 @@ public class UserController {
         return userService.createUsers(users);
     }
 }
+
+
+// create user (single user) --> POST /user  (RequestBody)
+// update user --> PUT /user  (RequestBody)
+// delete user by id --> DELETE /user:id=ashu  
+// get user by id --> GET /user:id=ashu
+// login user controller OR  get user by email and password --> POST /loginuser  (RequestBody Customize or DTO)
+

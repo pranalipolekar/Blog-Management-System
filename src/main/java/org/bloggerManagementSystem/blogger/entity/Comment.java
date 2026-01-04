@@ -14,14 +14,14 @@ public class Comment {
     private Long commentID;
 
     @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name = "blogID", referencedColumnName = "blogID", nullable = false)
+    @JoinColumn(name = "blogID", referencedColumnName = "blogID")
     private Blog blog;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID", referencedColumnName = "userID", nullable = false)
+    @JoinColumn(name = "userID", referencedColumnName = "userID")
     private User user;
 
-    @Column(name = "content", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "content")
     private String content;
 
     @CreationTimestamp

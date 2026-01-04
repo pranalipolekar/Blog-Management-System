@@ -26,19 +26,18 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
 
-    @Column(name = "username" , nullable = false, unique = true,length = 100)
+    @Column(name = "username")
     private String userName;
 
-    @Column(name = "email", nullable = false, unique = true, length = 150)
+    @Column(name = "email")
     @Setter(AccessLevel.PRIVATE)
     private String email;
 
-     @Setter(AccessLevel.NONE)
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role",nullable = false, length = 50)
+    @Column(name = "role")
     private UserRole role;
 
     @CreationTimestamp
