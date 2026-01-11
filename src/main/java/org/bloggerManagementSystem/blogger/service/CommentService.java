@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,5 +69,34 @@ public class CommentService {
         }
         commentRepository.delete(optionalComment.get());
         return new ResponseDTO("Comment has been deleted", optionalComment.get());
+    }
+
+    public ResponseDTO getCommentByUserId(Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isEmpty()){
+            return new ResponseDTO("User is not available", userId);
+        }
+
+        Optional<List<Comment>> optionalComment = commentRepository.findByUserId(userId);
+        return optionalComment.map(
+                comments -> new ResponseDTO("Comment Found", comments)).
+                orElseGet(() -> new ResponseDTO("No Comment Found ", optionalComment));
+    }
+
+    public ResponseDTO getCommentByBlogId(Long blogId) {
+        Optional<List<Comment>> optionalComment = commentRepository.findByBlogId(blogId);
+
+        return optionalComment.map(
+                comments -> new ResponseDTO("Comment Found Using BlogId", comments)).
+                orElseGet(() -> new ResponseDTO("No Comment Found Using BlogId", optionalComment));
+    }
+
+    public ResponseDTO getAllComment() {
+        Optional<List<Comment>> optionalComments = Optional.of(commentRepository.findAll());
+
+        return optionalComments.map(
+                comments -> new ResponseDTO("All Comment Found", comments)).
+                orElseGet(() -> new ResponseDTO("No Comment Found", optionalComments));
     }
 }

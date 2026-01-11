@@ -37,11 +37,30 @@ public class CommentController {
         ResponseDTO responseDTO = commentService.deleteComment(blogId,commentId,userId);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
+    // get comment by id --> GET /comment:id=ashu
+    @GetMapping("/{userId}")
+    public ResponseEntity<ResponseDTO> getCommnetByUserId(@PathVariable Long userId){
+        ResponseDTO responseDTO = commentService.getCommentByUserId(userId);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    // get all comments by blog id --> GET /commentsbypostid:blogid=1234
+    @GetMapping("/")
+    public ResponseEntity<ResponseDTO> getCommentByBlogId(@RequestParam Long blogId) {
+        ResponseDTO responseDTO = commentService.getCommentByBlogId(blogId);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    // get all comments --> GET /comments
+    @GetMapping("/")
+    public  ResponseEntity<ResponseDTO> getAllComment(){
+        ResponseDTO responseDTO = commentService.getAllComment();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
 }
 
 
-// get comment by id --> GET /comment:id=ashu
-// get all comments by post id --> GET /commentsbypostid:postid=1234
 // get all comments by user id --> GET /commentsbyuserid:userid=ashu
-// get all comments --> GET /comments
 
