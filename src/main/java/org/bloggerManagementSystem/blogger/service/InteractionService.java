@@ -6,6 +6,7 @@ import org.bloggerManagementSystem.blogger.entity.Blog;
 import org.bloggerManagementSystem.blogger.entity.Comment;
 import org.bloggerManagementSystem.blogger.entity.Interaction;
 import org.bloggerManagementSystem.blogger.entity.User;
+import org.bloggerManagementSystem.blogger.entity.enums.InteractionType;
 import org.bloggerManagementSystem.blogger.repository.BlogRepository;
 import org.bloggerManagementSystem.blogger.repository.CommentRepository;
 import org.bloggerManagementSystem.blogger.repository.InteractionRepository;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -51,4 +54,63 @@ public class InteractionService {
 
         return new ResponseDTO("Interaction is Created", resultInteraction);
     }
+
+    public ResponseDTO getInteractionById(Long interactionId) {
+        Optional<Interaction> optionalInteraction = interactionRepository.findById(interactionId);
+        return optionalInteraction.map(
+                interaction ->
+                        new ResponseDTO("Data Get Succesfully",optionalInteraction.get())).orElseGet(
+                () ->  new ResponseDTO("Data Not Found", optionalInteraction));
+    }
+
+    public ResponseDTO getInteractionByBlogId(Long blogId) {
+        Optional<List<Interaction>> optionalInteraction = interactionRepository.findByBlogId(blogId);
+        return optionalInteraction.map(
+                interaction ->
+                        new ResponseDTO("Data Get Succesfully",optionalInteraction.get())).orElseGet(
+                () ->  new ResponseDTO("Data Not Found", optionalInteraction));
+
+    }
+
+    public ResponseDTO getInteractionByUserId(Long userId) {
+        Optional<List<Interaction>> optionalInteraction = interactionRepository.findByUserId(userId);
+        return optionalInteraction.map(
+                interaction ->
+                        new ResponseDTO("Data Get Succesfully",optionalInteraction.get())).orElseGet(
+                () ->  new ResponseDTO("Data Not Found", optionalInteraction));
+    }
+
+    public ResponseDTO getInteractionByCommentId(Long commentId) {
+        Optional<List<Interaction>> optionalInteraction = interactionRepository.findByCommentId(commentId);
+        return optionalInteraction.map(
+                interaction ->
+                        new ResponseDTO("Data Get Succesfully",optionalInteraction.get())).orElseGet(
+                () ->  new ResponseDTO("Data Not Found", optionalInteraction));
+    }
+
+    public ResponseDTO getInteractionByType(InteractionType type) {
+        Optional<List<Interaction>> optionalInteraction = interactionRepository.findByType(type);
+        return optionalInteraction.map(
+                interaction ->
+                        new ResponseDTO("Data Get Succesfully",optionalInteraction.get())).orElseGet(
+                () ->  new ResponseDTO("Data Not Found", optionalInteraction));
+    }
+
+    public ResponseDTO deleteInteractionById(Long interactionId) {
+        return interactionRepository.findById(interactionId)
+                .map(interaction -> {
+                    interactionRepository.delete(interaction);
+                    return new ResponseDTO("Data Deleted Successfully", interaction);
+                })
+                .orElseGet(() -> new ResponseDTO("Data Not Found", null));
+    }
+
+    public ResponseDTO getAllInteraction() {
+        return Optional.of(interactionRepository.findAll())
+                .filter(list -> !list.isEmpty())
+                .map(list ->
+                        new ResponseDTO("Data Found Successfully", list))
+                .orElseGet(() -> new ResponseDTO("No Data Found", Collections.emptyList()));
+    }
+
 }
