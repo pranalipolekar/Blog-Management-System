@@ -48,7 +48,7 @@ public class Blog {
     public Blog() {
     }
 
-    public Blog(Long blogID, User user, String title, String content, BlogCategory category, String image, BlogStatus status, LocalDateTime publicationDate, LocalDateTime updatedAt) {
+    public Blog(Long blogID, User user, String title, String content, BlogCategory category, String image, BlogStatus status) {
         this.blogID = blogID;
         this.user = user;
         this.title = title;
@@ -56,8 +56,8 @@ public class Blog {
         this.category = category;
         this.image = image;
         this.status = status;
-        this.publicationDate = publicationDate;
-        this.updatedAt = updatedAt;
+        this.publicationDate = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     public Long getBlogID() {
@@ -80,7 +80,7 @@ public class Blog {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void updateTitle(String title) {
         this.title = title;
     }
 
@@ -120,15 +120,8 @@ public class Blog {
         return publicationDate;
     }
 
-    public void setPublicationDate(LocalDateTime publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }
